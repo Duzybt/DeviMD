@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Devi MD Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="card">
+    <h1>💖 Devi MD ✨</h1>
+    <div class="info">
+        <p><strong>Status:</strong> <span id="status">Loading...</span></p>
+    </div>
+    <div class="qr-box"><img id="qr" /></div>
+    <textarea id="customMessage" placeholder="Enter custom message..."></textarea>
+    <button id="saveBtn" onclick="save()">Save Settings 💾</button>
+</div>
+
+<script>
+async function loadInfo() {
+    const res = await fetch('/info');
+    const data = await res.json();
+    document.getElementById("status").innerText = data.status;
+    document.getElementById("qr").src = data.qrImage;
+    
+    // Only update textarea if user isn't currently typing
+    const msgInput = document.getElementById("customMessage");
+    if (document.activeElement !== msgInput) {
+        msgInput.value = data.settings.customMessage;
+    }
+}
+
+async function save() {
+    const btn = document.getElementById("saveBtn");
+    btn.innerText = "Saving...";
+    await fetch('/save', {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({
+            customMessage: document.getElementById("customMessage").value
+        })
+    });
+    btn.innerText = "Saved! ✅";
+    setTimeout(() => { btn.innerText = "Save Settings 💾"; }, 2000);
+}
+
+setInterval(loadInfo, 3000);
+loadInfo();
+</script>
+</body>
+</html>

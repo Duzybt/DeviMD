@@ -1,0 +1,11 @@
+{
+  "replyMode": "everyone",
+  "keywordMode": false,
+  "smartMode": false,
+  "customMessage": "Hello 💕 I’m Devi MD Bot! How can I help you today? ✨",
+  "footer": ">Devi MD ❤️✨",
+  "keywords": {
+    "hi": "Hello sweetheart 💖",
+    "price": "Please tell me which product 💌"
+  }
+}
